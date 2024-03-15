@@ -1,4 +1,4 @@
-import { Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Text, TextInput, TouchableOpacity, View, ScrollView } from "react-native";
 
 import { styles } from "./style";
 import { Participant } from "../../components/Participant";
@@ -6,7 +6,7 @@ import { useState } from "react";
 
 export function Home() {
 
-  const [name, setName] = useState('Eu');
+  const Participants = ['Eu-01', 'Eu-02', 'Eu-03', 'Eu-04', 'Eu-05'];
 
   function handleParticipantAdd() {
     return
@@ -38,8 +38,14 @@ export function Home() {
           </Text>
         </TouchableOpacity>
       </View>
-      <Participant name={name} onRemove={() => handleParticipantRemove(name)}/>
-      <Participant name={name} onRemove={() => handleParticipantRemove(`${name}-2`)}/>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        {
+          Participants.map((participant, _) => (
+            <Participant key={_} name={participant} onRemove={() => handleParticipantRemove(participant)} />
+          ))
+        }
+      </ScrollView>
+
     </View>
   )
 }
