@@ -2,10 +2,17 @@ import { Text, TextInput, TouchableOpacity, View } from "react-native";
 
 import { styles } from "./style";
 import { Participant } from "../../components/Participant";
+import { useState } from "react";
 
 export function Home() {
+
+  const [name, setName] = useState('Eu');
+
   function handleParticipantAdd() {
     return
+  }
+  function handleParticipantRemove(name: string) {
+    console.log(`Remover participante: ${name}`);
   }
 
   return (
@@ -31,7 +38,8 @@ export function Home() {
           </Text>
         </TouchableOpacity>
       </View>
-      <Participant />
+      <Participant name={name} onRemove={() => handleParticipantRemove(name)}/>
+      <Participant name={name} onRemove={() => handleParticipantRemove(`${name}-2`)}/>
     </View>
   )
 }
