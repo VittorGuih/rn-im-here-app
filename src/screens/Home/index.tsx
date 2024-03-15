@@ -21,7 +21,19 @@ export function Home() {
   }
 
   function handleParticipantRemove(name: string) {
-    setParticipants(participants.filter((participant) => {return participant != name}))
+    Alert.alert("❌ Remover Participante", `\n Deseja remover o participante: ${name} ?`, [
+      {
+        text: 'Sim',
+        onPress: () => {
+          setParticipants(participants.filter((participant) => {return participant != name}))
+        }
+      },
+      {
+        text: 'Não',
+        style: 'cancel'
+      }
+    ]);
+    
   }
 
   return (
@@ -45,7 +57,7 @@ export function Home() {
 
         <TouchableOpacity style={styles.button} onPress={() => handleParticipantAdd(name)}>
           <Text style={styles.buttonText}>
-            +
+            ✔
           </Text>
         </TouchableOpacity>
       </View>
