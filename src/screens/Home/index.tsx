@@ -1,5 +1,5 @@
 import { Text, TextInput, TouchableOpacity, View, FlatList, Alert } from "react-native";
-import { useRef, useState } from "react";
+import { useState } from "react";
 
 import { styles } from "./style";
 import { Participant } from "../../components/Participant";
@@ -27,7 +27,7 @@ export function Home() {
       {
         text: 'Sim',
         onPress: () => {
-          setParticipants(participants.filter((participant) => {return participant !== ParticipantName}))
+          setParticipants((prevState) => prevState.filter((participant) => {return participant !== ParticipantName}))
         }
       },
       {
