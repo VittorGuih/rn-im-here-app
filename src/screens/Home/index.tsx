@@ -6,26 +6,28 @@ import { Participant } from "../../components/Participant";
 
 export function Home() {
 
-  const [name, setName] = useState('')
+  const [ParticipantName, setParticipantName] = useState('')
   const [participants, setParticipants] = useState<string[]>([]);
-  const textInputRef = useRef<TextInput>(null)
 
-  function handleParticipantAdd(name: string) {
-    if (participants.includes(name))
+  function handleParticipantAdd() {
+    const noSpaceParticipantName = ParticipantName.trim();
+    const noSpaceParticipantNames = participants.map(participant => participant.trim());
+
+    if (noSpaceParticipantNames.includes(noSpaceParticipantName))
       return Alert.alert("Participante existe", "Já existe um participante na lista com esse nome.");
-    else if(!name)
+    else if(!ParticipantName)
       return Alert.alert("Participante vazio", "É necessário preencher o campo com o nome de um participante.");
 
-    setParticipants([name, ...participants])
-    textInputRef.current?.clear()
+    setParticipants((prevState) => [...prevState, ParticipantName])
+    setParticipantName('')
   }
-
-  function handleParticipantRemove(name: string) {
-    Alert.alert("❌ Remover Participante", `\n Deseja remover o participante: ${name} ?`, [
+// 
+  function handleParticipantRemove(ParticipantName: string) {
+    Alert.alert("❌ Remover Participante", `\n Deseja remover o participante: ${ParticipantName} ?`, [
       {
         text: 'Sim',
         onPress: () => {
-          setParticipants(participants.filter((participant) => {return participant != name}))
+          setParticipants(participants.filter((participant) => {return participant !== ParticipantName}))
         }
       },
       {
@@ -51,11 +53,11 @@ export function Home() {
           style={styles.input}
           placeholder="Nome do participante"
           placeholderTextColor="#6B6B6B"
-          onChange={(value) => setName(value.nativeEvent.text)}
-          ref={textInputRef}
+          onChangeText={setParticipantName}
+          value={ParticipantName}
         />
 
-        <TouchableOpacity style={styles.button} onPress={() => handleParticipantAdd(name)}>
+        <TouchableOpacity style={styles.button} onPress={handleParticipantAdd}>
           <Text style={styles.buttonText}>
             ✔
           </Text>
